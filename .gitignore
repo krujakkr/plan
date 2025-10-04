@@ -1,0 +1,61 @@
+# ระบบส่งแผนการจัดการเรียนรู้
+# .gitignore สำหรับ GitHub
+
+# ไฟล์ที่อัปโหลด (PDF) - อย่า push ขึ้น Git
+uploads/plans/*.pdf
+uploads/reflections/*.pdf
+
+# แต่เก็บโฟลเดอร์ไว้
+!uploads/plans/.gitkeep
+!uploads/reflections/.gitkeep
+
+# Config files ที่มีข้อมูลสำคัญ
+config/database.php
+
+# Backup ของ config
+config/database.php.backup
+config/database.local.php
+
+# ไฟล์ของ OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ไฟล์ของ Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ไฟล์ชั่วคราว
+*.tmp
+*.log
+*.cache
+
+# Node modules (ถ้ามีใช้ npm)
+node_modules/
+package-lock.json
+
+# Composer (ถ้ามีใช้ Composer)
+vendor/
+composer.lock
+
+# ไฟล์สำรอง
+*.bak
+*.backup
+*~
+
+# Error logs
+error_log
+php_errors.log
+
+# ไฟล์ทดสอบ
+test.php
+debug.php
+phpinfo.php
+
+# Environment files
+.env
+.env.local
+.env.production
