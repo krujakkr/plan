@@ -3,17 +3,16 @@ require_once 'config/config.php';
 require_once 'config/database.php';
 
 // ถ้า login แล้วให้ redirect ไปหน้าที่เหมาะสม
-if (isset($_SESSION['user_id'])) {
-    $base = dirname($_SERVER['PHP_SELF']);
+if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
     switch ($_SESSION['role']) {
         case 'teacher':
-            header("Location: " . $base . "/teacher/dashboard.php");
+            header("Location: teacher/dashboard.php");
             break;
         case 'evaluator':
-            header("Location: " . $base . "/evaluator/dashboard.php");
+            header("Location: evaluator/dashboard.php");
             break;
         case 'admin':
-            header("Location: " . $base . "/admin/settings.php");
+            header("Location: admin/settings.php");
             break;
     }
     exit();
@@ -40,27 +39,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             // ตรวจสอบรหัสผ่าน
             if (password_verify($password, $user['password'])) {
-                // Login สำเร็จ
+                // Login สำเร็จ - บันทึกข้อมูลพื้นฐาน
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['name'] = $user['name'];
                 $_SESSION['teacherId'] = $user['teacherId'];
-                $_SESSION['role'] = $user['role'];
                 $_SESSION['subjectGroup'] = $user['subjectGroup'];
                 
-                // Redirect ตาม role
-                $base = dirname($_SERVER['PHP_SELF']);
-                switch ($user['role']) {
-                    case 'teacher':
-                        header("Location: " . $base . "/teacher/dashboard.php");
-                        break;
-                    case 'evaluator':
-                        header("Location: " . $base . "/evaluator/dashboard.php");
-                        break;
-                    case 'admin':
-                        header("Location: " . $base . "/admin/settings.php");
-                        break;
+                // แยก roles
+                $roles = array_filter(array_map('trim', explode(',', $user['role'])));
+                
+                if (count($roles) > 1) {
+                    // มีหลาย roles - ให้ไปเลือก
+                    $_SESSION['available_roles'] = $roles;
+                    header("Location: select_role.php");
+                    exit();
+                } else {
+                    // มี role เดียว - เข้าตรงๆ
+                    $_SESSION['role'] = $roles[0];
+                    
+                    switch ($roles[0]) {
+                        case 'teacher':
+                            header("Location: teacher/dashboard.php");
+                            break;
+                        case 'evaluator':
+                            header("Location: evaluator/dashboard.php");
+                            break;
+                        case 'admin':
+                            header("Location: admin/settings.php");
+                            break;
+                    }
+                    exit();
                 }
-                exit();
             } else {
                 $error = 'รหัสผ่านไม่ถูกต้อง';
             }

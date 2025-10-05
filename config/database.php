@@ -1,9 +1,9 @@
 <?php
 // ตั้งค่าการเชื่อมต่อฐานข้อมูล
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'lesson_plan_system');
+define('DB_USER', 'knwacth_plan');
+define('DB_PASS', '5Xlxtx@gkW6E5qu*');
+define('DB_NAME', 'knwacth_plan');
 
 // สร้างการเชื่อมต่อ
 try {

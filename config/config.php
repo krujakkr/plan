@@ -5,7 +5,8 @@ session_start();
 date_default_timezone_set('Asia/Bangkok');
 
 // ตั้งค่าเส้นทางโครงการ
-define('BASE_URL', 'http://localhost/plan');
+// define('BASE_URL', 'http://localhost/plan');
+define('BASE_URL', 'https://plan.knw.ac.th');
 define('UPLOAD_PATH', __DIR__ . '/../uploads/');
 
 // ตั้งค่าการอัปโหลดไฟล์
